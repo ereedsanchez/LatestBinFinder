@@ -20,12 +20,9 @@ void setup() {
 
   servoX.attach(2);
   servoY.attach(3);
-  //establishContact();
-
+  establishContact();
 
 }
-
-
 
 
 void loop() {
@@ -34,24 +31,22 @@ void loop() {
   Servo currentServoX;
   Servo currentServoY;
 
-  //currentServoX = 50;
-  //currentServoY = 50;
-
   int PositionX = 50;
   int PositionY = 50;
 
   digitalWrite(laser, LOW);
-  digitalWrite(LED, LOW);
 
   // if there's any serial data in the buffer, read a byte:
   if (Serial.available() > 0) {
+        digitalWrite(LED, HIGH);
+
     int inByte = Serial.read();
 
-    // respond to the values 'x', 'y', 'b'
+    // respond to the values 'x', 'y', 'N'
     switch (inByte) {
 
-      case'N':     // Network Status
-        //update
+      case'A':     // Network Status
+        digitalWrite(LED, HIGH);
         break;
 
       case'x':     // x D-Pad
@@ -64,7 +59,6 @@ void loop() {
 
       case 'u':    // User info Automove
         sendData = 3;
-        
 
         break;
 
@@ -72,24 +66,23 @@ void loop() {
 
         break;
 
-
-
-        //  digitalWrite(laser, HIGH);
     }
 
 
     if (sendData == 1 ) {
       int PositionX = Serial.parseInt();
       // map the result to a level from 0 to 180
-      PositionX = map(PositionX, 0, 100, 150, 30);
+      PositionX = map(PositionX, 0, 100, 150, 50);
       servoX.write(PositionX);
-      digitalWrite(LED,HIGH);
+      //digitalWrite(LED, HIGH);
+      //delay(100);
+      digitalWrite(LED, LOW);
       delay(100);
-      digitalWrite(LED,LOW);
+      digitalWrite(LED, HIGH);
       delay(100);
-       digitalWrite(LED,HIGH);
-       delay(100);
-       digitalWrite(LED,LOW);
+      digitalWrite(LED, LOW);
+      delay(100);
+      digitalWrite(LED, HIGH);
 
       Serial.print("PositionX:");
       Serial.println(PositionX);
@@ -104,6 +97,15 @@ void loop() {
       PositionY = map(PositionY, 0, 100, 140, 40);
 
       servoY.write(PositionY);
+      
+      digitalWrite(LED, LOW);
+      delay(100);
+      digitalWrite(LED, HIGH);
+      delay(100);
+      digitalWrite(LED, LOW);
+      delay(100);
+      digitalWrite(LED, HIGH);
+      
       Serial.print("PositionY:");
       Serial.println(PositionY);
       delay(15);
@@ -140,17 +142,31 @@ void loop() {
 
       PositionX = map(PositionX, 0, 100, 150, 30);
       PositionY = map(PositionY, 0, 100, 140, 40);
-      
+
       servoX.write(PositionX);
       servoY.write(PositionY);
+      
+    digitalWrite(LED, LOW);
+      delay(100);
+      digitalWrite(LED, HIGH);
+      delay(100);
+      digitalWrite(LED, LOW);
 
       digitalWrite(laser, HIGH);
       
+      digitalWrite(LED, LOW);
+      delay(100);
+      digitalWrite(LED, HIGH);
+      delay(100);
+      digitalWrite(LED, LOW);
+      delay(100);
+      digitalWrite(LED, HIGH);
+
       Serial.print("PositionX:Y = ");
       Serial.print(PositionX);
       Serial.print(":");
       Serial.print(PositionY);
-      
+
       delay(5000);
       digitalWrite(laser, LOW);
       delay(10);
@@ -164,8 +180,14 @@ void loop() {
 void establishContact() {
   while (Serial.available() <= 0) {
     Serial.print('A');   // send a capital A
+    digitalWrite(LED, HIGH);
+    delay(10);
+    digitalWrite(LED, LOW);
     delay(300);
   }
+
+
+
 }
 
 
