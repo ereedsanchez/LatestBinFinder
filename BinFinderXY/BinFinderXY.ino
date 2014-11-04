@@ -1,6 +1,3 @@
-// add case for Network Status -LED ON
-//add case arms moving - flashing LED
-
 
 #include <Servo.h>
 #include <Process.h>
@@ -86,6 +83,13 @@ void loop() {
       // map the result to a level from 0 to 180
       PositionX = map(PositionX, 0, 100, 150, 30);
       servoX.write(PositionX);
+      digitalWrite(LED,HIGH);
+      delay(100);
+      digitalWrite(LED,LOW);
+      delay(100);
+       digitalWrite(LED,HIGH);
+       delay(100);
+       digitalWrite(LED,LOW);
 
       Serial.print("PositionX:");
       Serial.println(PositionX);
