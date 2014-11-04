@@ -59,19 +59,15 @@ void loop() {
 
       case'x':     // x D-Pad
         sendData = 1;
-        //currentServoX = servoX;
         break;
 
       case 'y':    // y D-Pad
         sendData = 2;
-        //currentServoY = servoY;
-
         break;
 
       case 'u':    // User info Automove
         sendData = 3;
-        //currentServoX = servoX;
-        //currentServoY = servoY;
+        
 
         break;
 
@@ -135,23 +131,24 @@ void loop() {
       String posXstring = XYString.substring(0, firstColon);
       String posYstring = XYString.substring(firstColon + 1, secondColon);
 
-      int PositionNAMEX = posXstring.toInt();
-      int PositionNAMEY = posYstring.toInt();
+      int PositionX = posXstring.toInt();
+      int PositionY = posYstring.toInt();
 
-
-      PositionNAMEX = map(PositionNAMEX, 0, 100, 1, 179);
-      posY = PositionNAMEX;
-      servoY.write(posY);
-
-      PositionNAMEY = map(PositionNAMEY, 0, 100, 1, 179);
-      posX = PositionNAMEY;
-      servoX.write(posX);
+      PositionX = map(PositionX, 0, 100, 150, 30);
+      PositionY = map(PositionY, 0, 100, 140, 40);
+      
+      servoX.write(PositionX);
+      servoY.write(PositionY);
 
       digitalWrite(laser, HIGH);
-      delay(1000);
+      
+      Serial.print("PositionX:Y = ");
+      Serial.print(PositionX);
+      Serial.print(":");
+      Serial.print(PositionY);
+      
+      delay(5000);
       digitalWrite(laser, LOW);
-      Serial.print("PositionNAMEX");
-      Serial.println(PositionNAMEX);
       delay(10);
 
 
